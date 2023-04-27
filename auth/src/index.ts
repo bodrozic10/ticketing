@@ -1,5 +1,17 @@
 import mongoose from "mongoose";
 import { app } from "./app";
+import https from "https";
+import fs from "fs";
+
+let key = fs.readFileSync(__dirname + "/key.pem", "utf-8");
+let cert = fs.readFileSync(__dirname + "/cert.pem", "utf-8");
+
+const parameters = {
+  key: key,
+  cert: cert,
+};
+
+let server = https.createServer(parameters, app);
 
 const start = async () => {
   try {
@@ -9,9 +21,8 @@ const start = async () => {
   } catch (error) {
     console.log(error);
   }
-
-  app.listen(3000, () => {
-    console.log("Listening on port 3000!!!!!!!!");
+  app.listen(5000, () => {
+    console.log("Listening on port 5000!!!!!!!!!!!");
   });
 };
 
